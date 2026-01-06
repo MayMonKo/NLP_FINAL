@@ -11,6 +11,7 @@ from nltk.stem import WordNetLemmatizer
 # -----------------------------
 nltk.download("punkt")
 nltk.download("stopwords")
+nltk.download("punkt_tab") 
 nltk.download("wordnet")
 
 stop_words = set(stopwords.words("english"))
@@ -32,7 +33,9 @@ def preprocess_text(text):
     text = text.lower()
     text = re.sub(r"http\S+|www\S+", "", text)
     text = re.sub(r"[^a-z\s]", "", text)
-    tokens = word_tokenize(text)
+    
+    tokens = word_tokenize(text, preserve_line=True)
+
     tokens = [t for t in tokens if t not in stop_words]
     tokens = [lemmatizer.lemmatize(t) for t in tokens]
     return " ".join(tokens)
